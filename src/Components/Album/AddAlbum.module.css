@@ -1,0 +1,34 @@
+.albumsection{
+    margin-top:50px;
+    display:flex;
+    justify-content:space-between;
+    
+}
+.addalbm span{
+    font-size:1.5rem;
+    font-weight: 800;
+}
+
+.addbtn button{
+    padding: 5px 10px 5px 10px;
+    border-radius:3px;
+    border:none;
+    outline:1px solid rgb(125, 123, 246);
+    font-size:0.8rem;
+    font-weight:700;
+    color:rgb(88, 88, 237);
+    background-color:lightblue;
+    cursor: pointer;
+}
+.cancelbtn button{
+    padding: 5px 10px 5px 10px;
+    border-radius:3px;
+    border:none;
+    outline:1px solid rgb(255, 99, 99);
+    font-size:0.8rem;
+    font-weight:700;
+    color:rgb(245, 10, 10);
+    background-color:rgb(255, 175, 175);
+    cursor: pointer;
+ 
+}

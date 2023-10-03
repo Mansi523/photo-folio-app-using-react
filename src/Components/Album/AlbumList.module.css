@@ -1,0 +1,106 @@
+.AlbumList{
+    width:90%;
+  position:relative;
+  top:40px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  
+    margin: auto;
+}
+.container{
+    height:200px;
+    width:200px;
+    border: 1px solid black;
+    border-radius:5px;
+    position:relative;
+     margin:30px 0px 30px 15px;
+    padding:0;
+    background-color: aliceblue;
+    transition: transform 0.9s;
+
+}
+.container:hover{
+    transform: scale(1.1);
+    box-shadow: 1px 1px 2px 2px rgb(140, 140, 255);
+}
+.edit{
+    position:absolute;
+    left:85%;
+    bottom:90%;
+    height:30px;
+    width:30px;
+    background-color:blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:50%;
+    display:none;
+    transition: transform 0.9s;
+    z-index:1;
+}
+.delete{
+    position:absolute;
+    left:67%;
+    bottom:90%;
+    height:30px;
+    width:30px;
+    background-color:red;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:50%;
+    display:none;
+    transition: transform 0.9s;
+    z-index:1;
+}
+.edit:hover,.delete:hover{
+    transform: scale(1.1);
+}
+.container:hover .delete{
+    display: flex;
+
+    /* transform: scale(1); */
+}
+.container:hover .edit{
+    display: flex;
+    /* transform: scale(1); */
+}
+
+.card{
+    /* background-color: aquamarine; */
+    height:100%;
+    width:98%;
+    margin: auto;
+   
+   
+}
+.card .image{
+    width:100%;
+    height:80%;
+    text-align:center;
+    margin-top:10px;
+}
+.image img{
+    height:100%;
+    width:90%;
+    margin:auto;
+    /* transition:transform 0.5s; */
+
+}
+/* .image img:hover{
+    transform: scale(0.9);
+} */
+.text{
+    height:20%;
+    width:90%;
+    margin: auto;
+    margin-top:3px;
+     
+}
+.text span{
+    font-weight: 700;
+    font-size:1rem;
+    
+}
