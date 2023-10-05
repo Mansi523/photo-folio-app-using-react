@@ -8,7 +8,9 @@
     font-size:1.5rem;
     font-weight: 800;
 }
-
+.imageHeading{
+    margin-left:40px!important;
+}
 .addbtn button{
     padding: 5px 10px 5px 10px;
     border-radius:3px;

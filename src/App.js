@@ -2,6 +2,8 @@ import Navbar from "./Components/Navbar/Navbar";
 import Form from "./Components/Album/Form";
 import AddAlbum from "./Components/Album/AddAlbum";
 import AlbumList from "./Components/Album/AlbumList";
+import AlbumInner from "./Components/Albumlist/AlbumInner";
+import FormInner from "./Components/Albumlist/FormInner";
 import { useState,useEffect} from "react";
 import {db} from "./firebaseinIt";
 import { addDoc,collection,getDocs,doc, deleteDoc,updateDoc,onSnapshot} from "firebase/firestore";
@@ -14,8 +16,11 @@ function App() {
   const[url,seturl] = useState("");
   const[album,setalbum] = useState([]);
   const[search,sethandleSearch] = useState([]);
-  
+  const[visual,setvisual]=useState(true);
+  const[albumname,setalbumname]=useState({});
   const[update,setupdate] =useState(null);
+  const[innername,setinnername] = useState("");
+  const[innerurl,setinnerurl] = useState("");
 
   const handleClear=()=>{
       setname("");
@@ -28,7 +33,8 @@ function App() {
     }
     const album_name = {
       name:name,
-      url:url
+      url:url,
+      albumlistInner:[{}],
     }
     console.log(album_name);
     try{
@@ -42,8 +48,7 @@ function App() {
     }
     setname("");
     seturl("");
-    
-     setisbtn(false);
+    setisbtn(false);
   }
 
 useEffect(()=>{
@@ -123,8 +128,23 @@ sethandleSearch(fliterasearch);
 // setalbum(fliterasearch);
 }  
 
-
-
+//function for inner album display
+const handleInnerDisplay=()=>{
+setvisual(!visual);
+}
+//function for setting the name of the inner album form
+const handleNameInnerForm=(e)=>{
+  setalbumname(e);
+}
+//function for clearing the value of the innerform
+const handleInnerClear=()=>{
+ setinnername("");
+ setinnerurl("");
+}
+//function for hiding form as well as pushing data in the albumlist 
+const handleInnerCreate=()=>{
+  setisbtn(false);
+}
   return (
     <div>
     
@@ -134,7 +154,7 @@ sethandleSearch(fliterasearch);
     search={search}
    />
     <section style ={{width:"70%",margin:"auto"}}>
-    {isbtn && <Form
+    {visual?<>{isbtn && <Form
                name = {name}
                setname = {setname}
                url ={url}
@@ -143,16 +163,35 @@ sethandleSearch(fliterasearch);
                handleCreate={handleCreate}
                update ={update}
               updateAlbum = {updateAlbum}
-              />}
+              />}</>:<>{isbtn && <FormInner
+              albumname={albumname}
+              setinnername={setinnername}
+              setinnerurl={setinnerurl}
+              innername={innername}
+              innerurl={innerurl}
+              handleInnerClear={handleInnerClear}
+            handleInnerCreate={handleInnerCreate}
+              />}</>
+         
+    }
+
    <AddAlbum setisbtn ={setisbtn} 
-             isbtn = {isbtn}
+             isbtn = {isbtn} 
+             visual = {visual}
+             albumname = {albumname}
+            handleInnerDisplay={handleInnerDisplay}
    />
-   <AlbumList
-      album={album}
-      handleDelete={ handleDelete}
-      handleUpdate={ handleUpdate}
-      search={search}
-   />
+   {
+    visual?<AlbumList
+    album={album}
+    handleDelete={ handleDelete}
+    handleUpdate={ handleUpdate}
+    search={search}
+    handleInnerDisplay={handleInnerDisplay}
+    handleNameInnerForm={handleNameInnerForm}
+ />:<AlbumInner/>
+   }
+ 
     <ToastContainer />
     </section>
   

@@ -1,8 +1,8 @@
 import React from "react";
 import style from "./AlbumList.module.css";
 import { MdOutlineModeEditOutline} from 'react-icons/md';
-import {RiDeleteBin6Line} from 'react-icons/ri'
-const AlbumList = ({album,handleDelete,handleUpdate,search}) => {
+import {RiDeleteBin6Line} from 'react-icons/ri';
+const AlbumList = ({album,handleDelete,handleUpdate,search,handleInnerDisplay,handleNameInnerForm}) => {
   //  console.log("---",album.length);
   //  console.log("**",album);
   let data = [];
@@ -16,7 +16,7 @@ const AlbumList = ({album,handleDelete,handleUpdate,search}) => {
     <section className={style.AlbumList}>
        {
        data?.map((item)=>(
-        <div className={style.container} key={item.id} >
+        <div className={style.container} key={item.id} onClick={()=>{handleInnerDisplay();handleNameInnerForm(item)}}  >
         <div className={style.edit} onClick={()=>handleUpdate(item)}><MdOutlineModeEditOutline color="white" fontSize={20}/></div>
         <div className={style.delete} onClick={()=>handleDelete(item)}><RiDeleteBin6Line color="white" fontSize={20}/></div>
         <div className={style.card}>
