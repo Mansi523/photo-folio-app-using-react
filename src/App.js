@@ -22,7 +22,7 @@ function App() {
   const[update,setupdate] =useState(null);
   const[innername,setinnername] = useState("");
   const[innerurl,setinnerurl] = useState("");
-
+  const[inneralbum,setinneralbum] = useState(null);
   const handleClear=()=>{
       setname("");
       seturl("");
@@ -161,13 +161,55 @@ await updateDoc(washingtonRef, {
 });
 toast(`Image added to ${albumname.name}`);
 
-// Atomically remove a region from the "regions" array field.
-// await updateDoc(washingtonRef, {
-//     regions: arrayRemove("east_coast")
-// });
+  setinnername("");
+  setinnerurl("");
   setisbtn(false);
-
+  
 }
+
+//function for deleting the inner images of the album.
+const handleDeleteImageInner = async(item)=>{
+  const washingtonRef = doc(db, "albumData",albumname.id);
+
+await updateDoc(washingtonRef, {
+
+  albumlistInner : arrayRemove(item)
+});
+toast(`Image deleted sucessfully!!`);
+}
+//function for handling edit function of the inner images.
+const handleInnerEdit =(item)=>{
+  setinneralbum(item);
+  if(inneralbum){
+    setisbtn(true);
+  }
+}
+//function for handling update function for the inner images.
+const handleUpdateImage =async()=>{
+ let updateddata = {
+  innername,
+  innerurl,
+  id:Date.now()
+ };
+ const washingtonRef = doc(db, "albumData",albumname.id);
+
+// Atomically add a new region to the "regions" array field.
+await updateDoc(washingtonRef, {
+  albumlistInner: arrayUnion(updateddata)
+});
+
+await updateDoc(washingtonRef, {
+
+  albumlistInner : arrayRemove(inneralbum)
+});
+
+toast(`Image updated in ${albumname.name}`);
+setisbtn(false);
+setinnername("");
+setinnerurl("");
+setinneralbum(null);
+}
+
   return (
     <div>
     
@@ -175,6 +217,9 @@ toast(`Image added to ${albumname.name}`);
     length={album.length}
     handleSearch = {handleSearch}
     search={search}
+    visual={visual}
+    album={album}
+    albumname={albumname}
    />
     <section style ={{width:"70%",margin:"auto"}}>
     {visual?<>{isbtn && <Form
@@ -194,6 +239,8 @@ toast(`Image added to ${albumname.name}`);
               innerurl={innerurl}
               handleInnerClear={handleInnerClear}
             handleInnerCreate={handleInnerCreate}
+            inneralbum={inneralbum}
+            handleUpdateImage={handleUpdateImage}
               />}</>
          
     }
@@ -215,6 +262,8 @@ toast(`Image added to ${albumname.name}`);
  />:<AlbumInner
  album={album}
  albumname={albumname}
+ handleDeleteImageInner={handleDeleteImageInner}
+ handleInnerEdit={handleInnerEdit}
  />
    }
  

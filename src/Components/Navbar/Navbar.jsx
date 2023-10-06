@@ -2,8 +2,16 @@ import React from 'react'
 import {IoNotifications } from 'react-icons/io5';
 import style from './Navbar.module.css';
 import { useState } from 'react';
-const Navbar = ({length,handleSearch,search}) => {
+const Navbar = ({length,handleSearch,search,visual,album,albumname}) => {
 const[importdata,setimportdata] = useState("");
+
+let testvar={};
+const test = ()=>{
+  testvar = album.find((item)=>item.id == albumname.id);
+  console.log("testvar",testvar);
+}
+test();
+
   return (
     <header>
      {/* left div */}
@@ -35,7 +43,7 @@ const[importdata,setimportdata] = useState("");
    }
       </div>
      <div className={style.notificationIcon}>
-      <div className={style.count}>{length}</div>
+      <div className={style.count}>{visual?length:testvar.albumlistInner.length}</div>
      <div><IoNotifications color="yellow" fontSize={35} id={style.bell}/></div>
      </div>
     </div>

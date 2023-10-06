@@ -3,8 +3,7 @@ import style from "./AlbumList.module.css";
 import { MdOutlineModeEditOutline} from 'react-icons/md';
 import {RiDeleteBin6Line} from 'react-icons/ri';
 const AlbumList = ({album,handleDelete,handleUpdate,search,handleInnerDisplay,handleNameInnerForm}) => {
-  //  console.log("---",album.length);
-  //  console.log("**",album);
+
   let data = [];
    if(search.length>0){
        data = search || album;
