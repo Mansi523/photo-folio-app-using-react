@@ -6,7 +6,8 @@ import AlbumInner from "./Components/Albumlist/AlbumInner";
 import FormInner from "./Components/Albumlist/FormInner";
 import { useState,useEffect} from "react";
 import {db} from "./firebaseinIt";
-import { addDoc,collection,getDocs,doc, deleteDoc,updateDoc,onSnapshot} from "firebase/firestore";
+import { addDoc,collection,getDocs,doc, deleteDoc,updateDoc,onSnapshot, arrayUnion, arrayRemove} from "firebase/firestore";
+
 //import toastify
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +35,7 @@ function App() {
     const album_name = {
       name:name,
       url:url,
-      albumlistInner:[{}],
+      albumlistInner:[],
     }
     console.log(album_name);
     try{
@@ -142,8 +143,30 @@ const handleInnerClear=()=>{
  setinnerurl("");
 }
 //function for hiding form as well as pushing data in the albumlist 
-const handleInnerCreate=()=>{
+const handleInnerCreate=async()=>{
+  if(innername == ""){
+    toast("plz enter a valid name!");
+    return;
+  } 
+  if(innerurl == ""){
+    toast("plz enter a valid url!");
+    return;
+  }
+const Innerdata = {innername,innerurl,id:Date.now()};
+const washingtonRef = doc(db, "albumData",albumname.id);
+
+// Atomically add a new region to the "regions" array field.
+await updateDoc(washingtonRef, {
+  albumlistInner: arrayUnion(Innerdata)
+});
+toast(`Image added to ${albumname.name}`);
+
+// Atomically remove a region from the "regions" array field.
+// await updateDoc(washingtonRef, {
+//     regions: arrayRemove("east_coast")
+// });
   setisbtn(false);
+
 }
   return (
     <div>
@@ -189,7 +212,10 @@ const handleInnerCreate=()=>{
     search={search}
     handleInnerDisplay={handleInnerDisplay}
     handleNameInnerForm={handleNameInnerForm}
- />:<AlbumInner/>
+ />:<AlbumInner
+ album={album}
+ albumname={albumname}
+ />
    }
  
     <ToastContainer />
