@@ -2,6 +2,8 @@ import React from 'react';
 import style from "./AlbumInner.module.css";
 import { MdOutlineModeEditOutline} from 'react-icons/md';
 import {RiDeleteBin6Line} from 'react-icons/ri';
+import {slider} from "./slider";
+
 const AlbumInner = ({album,albumname,handleDeleteImageInner,handleInnerEdit}) => {
 
 

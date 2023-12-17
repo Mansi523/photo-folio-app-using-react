@@ -1,16 +1,27 @@
 import React from 'react'
 import {IoNotifications } from 'react-icons/io5';
-import style from './Navbar.module.css';
-import { useState } from 'react';
+import style from "./Navbar.module.css";
+import { useState,useEffect } from 'react';
 const Navbar = ({length,handleSearch,search,visual,album,albumname}) => {
-const[importdata,setimportdata] = useState("");
+const[suggestionDispay,setsuggestionDispay] = useState(false);
+
+useEffect(()=>{
+  if(search.length>0){
+    setsuggestionDispay(true);
+  }
+},[search])
 
 let testvar={};
 const test = ()=>{
   testvar = album.find((item)=>item.id == albumname.id);
-  console.log("testvar",testvar);
 }
 test();
+
+document.addEventListener("click",(e)=>{
+if(e.target.id !== "suggestionbox" && e.target.id !== "inputValue"){
+  setsuggestionDispay(false);
+}
+})
 
   return (
     <header>
@@ -26,10 +37,10 @@ test();
     </div>
     {/* right div */}
     <div className={style.right}>
-     <div className={style.searchbar}>
-     <input type="text" onChange={(e)=>setimportdata(e.target.value)} onKeyUp={(e)=>handleSearch(e)} placeholder="Search..."/>
-    {search.length>0 && importdata && 
-      <div className={style.searchfilter}>
+    {visual && <div className={style.searchbar}>
+     <input type="text" id="inputValue" onKeyUp={(e)=>handleSearch(e)} placeholder="Search..."/>
+    {search.length>0 && suggestionDispay && 
+      <div id="suggestionbox" className={style.searchfilter}>
         <ul>
 
           {search.map((item,index)=>(
@@ -41,7 +52,7 @@ test();
         </ul>
       </div>
    }
-      </div>
+      </div>}
      <div className={style.notificationIcon}>
       <div className={style.count}>{visual?length:testvar.albumlistInner.length}</div>
      <div><IoNotifications color="yellow" fontSize={35} id={style.bell}/></div>
